@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0Hh-2c-9Lw">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--MagazinesVC-->
+        <scene sceneID="1BD-Oj-2cD">
+            <objects>
+                <viewController id="0Hh-2c-9Lw" customClass="MagazinesVC" customModule="Magazines" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TPo-e1-hYi"/>
+                        <viewControllerLayoutGuide type="bottom" id="wQm-ue-2om"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bJX-a8-QIN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lists of Magazines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XzY-4P-Fcq">
+                                <rect key="frame" x="66" y="18" width="227" height="69"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="KDh-KJ-u4x"/>
+                                    <constraint firstAttribute="width" constant="227" id="m0j-Eh-w52"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JYS-5S-LwD">
+                                <rect key="frame" x="0.0" y="87" width="375" height="580"/>
+                                <color key="backgroundColor" red="0.87334360300000002" green="0.79499131830000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uEc-Qv-QCM">
+                                    <size key="itemSize" width="374" height="64"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZNv-nv-7B2">
+                                <rect key="frame" x="328" y="37" width="38" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="grid">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="list"/>
+                                <connections>
+                                    <action selector="selectionButton:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="U5z-E8-eTF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qU-76-fWt">
+                                <rect key="frame" x="5" y="43" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="search ico"/>
+                                <connections>
+                                    <action selector="searchButtonAction:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="qTg-am-hD1"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Zy-Z8-zbZ">
+                                <rect key="frame" x="301" y="37" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="delete"/>
+                                <connections>
+                                    <action selector="deleteActionButton:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="c3y-R9-7gh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.92561844506463309" blue="0.96617671583195308" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JYS-5S-LwD" firstAttribute="top" secondItem="XzY-4P-Fcq" secondAttribute="bottom" id="7zu-DF-Ih7"/>
+                            <constraint firstItem="wQm-ue-2om" firstAttribute="top" secondItem="JYS-5S-LwD" secondAttribute="bottom" id="Hpc-ok-iwN"/>
+                            <constraint firstItem="XzY-4P-Fcq" firstAttribute="top" secondItem="TPo-e1-hYi" secondAttribute="bottom" constant="-2" id="RXr-H0-Fmj"/>
+                            <constraint firstItem="JYS-5S-LwD" firstAttribute="width" secondItem="bJX-a8-QIN" secondAttribute="width" id="Zyf-96-hP3"/>
+                            <constraint firstItem="XzY-4P-Fcq" firstAttribute="centerX" secondItem="bJX-a8-QIN" secondAttribute="centerX" constant="-8" id="mnu-nB-BDx"/>
+                            <constraint firstItem="JYS-5S-LwD" firstAttribute="centerX" secondItem="bJX-a8-QIN" secondAttribute="centerX" id="yOr-01-Yg8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionViewOutlet" destination="JYS-5S-LwD" id="wmA-hX-GrN"/>
+                        <outlet property="deleteOutletButton" destination="8Zy-Z8-zbZ" id="VPK-1Q-eMW"/>
+                        <outlet property="labelOutlet" destination="XzY-4P-Fcq" id="Oc7-uN-uzi"/>
+                        <outlet property="searchButtonOutlet" destination="9qU-76-fWt" id="cx3-vH-PD4"/>
+                        <outlet property="selectionOutlet" destination="ZNv-nv-7B2" id="h7p-h1-eX3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GPi-3c-nch" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="396" y="156.97151424287858"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="delete" width="25" height="25"/>
+        <image name="grid" width="30" height="30"/>
+        <image name="list" width="30" height="30"/>
+        <image name="search ico" width="50" height="50"/>
+    </resources>
+</document>
