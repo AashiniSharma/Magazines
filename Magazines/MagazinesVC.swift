@@ -7,10 +7,14 @@ class MagazinesVC: UIViewController {
     @IBOutlet weak var labelOutlet: UILabel!
    
     @IBOutlet weak var deleteOutletButton: UIButton!
+   
     @IBOutlet weak var searchButtonOutlet: UIButton!
     @IBOutlet weak var collectionViewOutlet: UICollectionView!
     
-    var flowToDisplay = flow.list
+    @IBOutlet weak var searchTextfield: UITextField!
+    
+    @IBOutlet weak var noofSelectesItems: UILabel!
+        var flowToDisplay = flow.list
     
     
     var listView = ListViewFlowout()
@@ -44,6 +48,9 @@ class MagazinesVC: UIViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        noofSelectesItems.isHidden = true
+        
+        
         let nib = UINib(nibName: "ListViewCell", bundle: nil)
         collectionViewOutlet.register(nib, forCellWithReuseIdentifier: "ListCellID")
         
@@ -60,11 +67,13 @@ class MagazinesVC: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         self.collectionViewOutlet.addGestureRecognizer(longPressGesture)
-
+        
+        collectionViewOutlet.allowsSelection = false
+    
         
 
     }
-  
+    
     
     override func didReceiveMemoryWarning(){
         super.didReceiveMemoryWarning()
@@ -80,40 +89,58 @@ class MagazinesVC: UIViewController {
             self.selectionOutlet.isSelected = false
             flowToDisplay = flow.list
             
-            UIView.animate(withDuration: 1.0) { () -> Void in
-                self.collectionViewOutlet.collectionViewLayout.invalidateLayout()
-                self.collectionViewOutlet.setCollectionViewLayout(self.listView, animated: true)}
-        
+            UIView.animate(withDuration: 0.35) { () -> Void in
+            self.collectionViewOutlet.collectionViewLayout.invalidateLayout()
+            self.collectionViewOutlet.setCollectionViewLayout(self.listView, animated: true)}
+            
         }
         else{
             
             self.selectionOutlet.isSelected = true
             flowToDisplay = flow.grid
             
-            UIView.animate(withDuration: 1.0) { () -> Void in
-                self.collectionViewOutlet.collectionViewLayout.invalidateLayout()
-                self.collectionViewOutlet.setCollectionViewLayout(self.gridView, animated: true)}
+           
+            
+            UIView.animate(withDuration: 0.35) { () -> Void in
+            self.collectionViewOutlet.collectionViewLayout.invalidateLayout()
+            self.collectionViewOutlet.setCollectionViewLayout(self.gridView, animated: true)}
+            
         }
        
     }
     @IBAction func deleteActionButton(_ sender: UIButton) {
         
+        
+        
+
         deleteOutletButton.isHidden = true
         deleteOutletButton.isEnabled = false
+        noofSelectesItems.isHidden = true
         
         indexPaths = indexPaths.sorted(by: >)
         
         for index in 0..<indexPaths.count {
+            
             data.remove(at: (indexPaths[index].row))
+        
             collectionViewOutlet.deleteItems(at: [indexPaths[index]])
+        
+
         }
 
         
         indexPaths = []
         
-        self.collectionViewOutlet.reloadData()
+       
+                
+        collectionViewOutlet.allowsMultipleSelection = false
+        collectionViewOutlet.allowsSelection = false
         
+    }
+    @IBAction func seacrhButtonAction(_ sender: UIButton) {
         
+        labelOutlet.isHidden = true
+        searchTextfield.isHidden = false
         
     }
  // function for long tap gesture
@@ -122,32 +149,26 @@ class MagazinesVC: UIViewController {
        
         deleteOutletButton.isHidden = false
         deleteOutletButton.isEnabled = true
-        gesture.minimumPressDuration = 0.05
         
-        if gesture.state != .ended {
+        collectionViewOutlet.allowsMultipleSelection = true
+        
+        
+        if gesture.state == .ended {
             return
         }
         let p = gesture.location(in: self.collectionViewOutlet)
         
         if let indexPath = self.collectionViewOutlet.indexPathForItem(at: p) {
             
-            let cell = self.collectionViewOutlet.cellForItem(at: indexPath)
-          
+         collectionViewOutlet.selectItem(at: indexPath, animated: true, scrollPosition: .bottom)
+            collectionView(collectionViewOutlet, didSelectItemAt: indexPath)
             
-            if !(indexPaths.contains(indexPath)){
-                indexPaths.append(indexPath)
-                cell?.layer.borderWidth = 5
-            }else {
-                indexPaths.remove(at: indexPaths.index(of: indexPath)!)
-                cell?.layer.borderWidth = 0
-            }
-            
-        print(indexPaths)
-           
         }
         else {
             print("couldn't find index path")
         }
+        
+
     }
     
 }
@@ -167,7 +188,7 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCellID", for: indexPath) as! ListViewCell
                 cell.magazinesNames.text = data[indexPath.item]["title"]
                 cell.magazinesImages.image = UIImage(named: data[indexPath.item]["values"]!)
-//                cell.backgroundColor = .clear
+               cell.backgroundColor = .clear
                 return cell
         }
         //MARK: grid view
@@ -175,10 +196,48 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridViewID", for: indexPath) as! GridView
             cell.magazinesNanesGrid.text = data[indexPath.item]["title"]
             cell.magazinesImagesGrid.image = UIImage(named: data[indexPath.item]["values"]!)
-
+            cell.backgroundColor = .clear
             return cell
         }
      
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        noofSelectesItems.isHidden = false
+        
+        
+        labelOutlet.isHidden = false
+        searchTextfield.isHidden = true
+        if !(indexPaths.contains(indexPath)){
+       
+        indexPaths.append(indexPath)
+        print(#function)
+            noofSelectesItems.text = "\(indexPaths.count)"
+            noofSelectesItems.layer.borderWidth = 1
+            noofSelectesItems.layer.borderColor = UIColor.black.cgColor
+        }
+        let cell = self.collectionViewOutlet.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.lightText
+
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        print(#function)
+
+        let cell = self.collectionViewOutlet.cellForItem(at: indexPath)
+        indexPaths.remove(at: indexPaths.index(of: indexPath)!)
+        cell?.backgroundColor = UIColor.clear
+        
+         noofSelectesItems.text = "\(indexPaths.count)"
+        if indexPaths.isEmpty{
+            deleteOutletButton.isHidden = true
+            deleteOutletButton.isEnabled = false
+            noofSelectesItems.text = ""
+            noofSelectesItems.layer.borderWidth = 0
+            collectionViewOutlet.allowsSelection = false
+            collectionViewOutlet.allowsMultipleSelection = false
+            
+        }
+        
     }
     
 }

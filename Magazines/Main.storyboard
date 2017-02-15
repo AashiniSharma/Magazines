@@ -53,16 +53,30 @@
                                     <action selector="selectionButton:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="U5z-E8-eTF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qU-76-fWt">
-                                <rect key="frame" x="5" y="43" width="24" height="24"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qU-76-fWt">
+                                <rect key="frame" x="5" y="43" width="26" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="search ico"/>
                                 <connections>
-                                    <action selector="searchButtonAction:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="qTg-am-hD1"/>
+                                    <action selector="seacrhButtonAction:" destination="0Hh-2c-9Lw" eventType="touchUpInside" id="yxJ-Ci-FqR"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PEO-Jf-fBZ">
+                                <rect key="frame" x="32" y="46" width="37" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lGU-Ak-DMT">
+                                <rect key="frame" x="117" y="40" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                            </textField>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Zy-Z8-zbZ">
-                                <rect key="frame" x="301" y="37" width="25" height="25"/>
+                                <rect key="frame" x="301" y="40" width="25" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="delete"/>
                                 <connections>
@@ -84,7 +98,9 @@
                         <outlet property="collectionViewOutlet" destination="JYS-5S-LwD" id="wmA-hX-GrN"/>
                         <outlet property="deleteOutletButton" destination="8Zy-Z8-zbZ" id="VPK-1Q-eMW"/>
                         <outlet property="labelOutlet" destination="XzY-4P-Fcq" id="Oc7-uN-uzi"/>
-                        <outlet property="searchButtonOutlet" destination="9qU-76-fWt" id="cx3-vH-PD4"/>
+                        <outlet property="noofSelectesItems" destination="PEO-Jf-fBZ" id="E2P-pn-2kv"/>
+                        <outlet property="searchButtonOutlet" destination="9qU-76-fWt" id="uLz-2j-L63"/>
+                        <outlet property="searchTextfield" destination="lGU-Ak-DMT" id="WW7-B0-jKW"/>
                         <outlet property="selectionOutlet" destination="ZNv-nv-7B2" id="h7p-h1-eX3"/>
                     </connections>
                 </viewController>
