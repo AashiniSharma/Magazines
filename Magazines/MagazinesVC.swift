@@ -14,7 +14,8 @@ class MagazinesVC: UIViewController {
     @IBOutlet weak var searchTextfield: UITextField!
     
     @IBOutlet weak var noofSelectesItems: UILabel!
-        var flowToDisplay = flow.list
+    
+    var flowToDisplay = flow.list
     
     
     var listView = ListViewFlowout()
@@ -22,6 +23,9 @@ class MagazinesVC: UIViewController {
     
     
     var indexPaths = [IndexPath]()
+    var filtered : [String] = []
+    
+    var searchActive : Bool = false
     
 //Magazines names and images (input data)
     var data: [[String:String]] = [
@@ -50,7 +54,6 @@ class MagazinesVC: UIViewController {
         
         noofSelectesItems.isHidden = true
         
-        
         let nib = UINib(nibName: "ListViewCell", bundle: nil)
         collectionViewOutlet.register(nib, forCellWithReuseIdentifier: "ListCellID")
         
@@ -69,8 +72,6 @@ class MagazinesVC: UIViewController {
         self.collectionViewOutlet.addGestureRecognizer(longPressGesture)
         
         collectionViewOutlet.allowsSelection = false
-    
-        
 
     }
     
@@ -109,9 +110,6 @@ class MagazinesVC: UIViewController {
        
     }
     @IBAction func deleteActionButton(_ sender: UIButton) {
-        
-        
-        
 
         deleteOutletButton.isHidden = true
         deleteOutletButton.isEnabled = false
@@ -127,11 +125,8 @@ class MagazinesVC: UIViewController {
         
 
         }
-
         
         indexPaths = []
-        
-       
                 
         collectionViewOutlet.allowsMultipleSelection = false
         collectionViewOutlet.allowsSelection = false
@@ -142,7 +137,35 @@ class MagazinesVC: UIViewController {
         labelOutlet.isHidden = true
         searchTextfield.isHidden = false
         
+
     }
+    @IBAction func searchTextfieldAction(_ sender: UITextField) {
+        
+        searchText(searchText: searchTextfield, textDidChange: "")
+        
+//        if(collectionViewOutlet.alpha == 0){
+//            collectionViewOutlet.alpha = 1
+//            searchActive = true;
+//            searchText(searchText: searchTextfield, textDidChange: "")
+//            
+//        }else{
+//            collectionViewOutlet.alpha = 0
+//            searchActive = false;
+//        }
+        
+    }
+    
+    func searchText(searchText: UITextField, textDidChange newSearch: String) {
+        
+        let filtered = data.filter { (index : [String : String]) -> Bool in
+            
+            return searchTextfield.text == index["title"]
+            
+        }
+        print(filtered)
+    }
+    
+    
  // function for long tap gesture
     func handleLongPress(gesture : UILongPressGestureRecognizer!) {
         
@@ -171,6 +194,8 @@ class MagazinesVC: UIViewController {
 
     }
     
+    
+    
 }
 
 
@@ -188,19 +213,44 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListCellID", for: indexPath) as! ListViewCell
                 cell.magazinesNames.text = data[indexPath.item]["title"]
                 cell.magazinesImages.image = UIImage(named: data[indexPath.item]["values"]!)
+            
+            if  (indexPaths.contains(indexPath)){
+                
+                cell.backgroundColor = UIColor.lightText
+
+                
+            }
+            
+            else{
+            
+            
                cell.backgroundColor = .clear
-                return cell
+              
+            }
+              return cell
         }
         //MARK: grid view
         else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GridViewID", for: indexPath) as! GridView
             cell.magazinesNanesGrid.text = data[indexPath.item]["title"]
             cell.magazinesImagesGrid.image = UIImage(named: data[indexPath.item]["values"]!)
+            
+            
+            if  (indexPaths.contains(indexPath)){
+                
+                cell.backgroundColor = UIColor.lightText
+                
+                
+            }
+                
+            else{
+
             cell.backgroundColor = .clear
-            return cell
+          
         }
-     
+       return cell
     }
+}
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         noofSelectesItems.isHidden = false
         
@@ -209,8 +259,8 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
         searchTextfield.isHidden = true
         if !(indexPaths.contains(indexPath)){
        
-        indexPaths.append(indexPath)
-        print(#function)
+            indexPaths.append(indexPath)
+            print(#function)
             noofSelectesItems.text = "\(indexPaths.count)"
             noofSelectesItems.layer.borderWidth = 1
             noofSelectesItems.layer.borderColor = UIColor.black.cgColor
@@ -228,6 +278,7 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
         cell?.backgroundColor = UIColor.clear
         
          noofSelectesItems.text = "\(indexPaths.count)"
+        
         if indexPaths.isEmpty{
             deleteOutletButton.isHidden = true
             deleteOutletButton.isEnabled = false
@@ -241,7 +292,6 @@ extension MagazinesVC: UICollectionViewDelegate,UICollectionViewDataSource,UICol
     }
     
 }
-
 
 
 enum flow {
